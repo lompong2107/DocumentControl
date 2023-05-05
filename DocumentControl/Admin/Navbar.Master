@@ -1,0 +1,215 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="~/Admin/Navbar.master.cs" Inherits="DocumentControl.Admin.Navbar" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <link rel="icon" href="~/Image/setting.png" />
+    <%-- Bootstrap --%>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src='<%= ResolveClientUrl("~/Scripts/bootstrap.bundle.min.js") %>'></script>
+    <%-- CSS Custom --%>
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <%-- Jquery 3.6.0 --%>
+    <script type="text/javascript" src='<%= ResolveClientUrl("~/Scripts/jquery-3.6.0.js") %>'></script>
+    <%-- Font Awesome 5.15.4 --%>
+    <!-- our project just needs Font Awesome Solid + Brands -->
+    <link href="~/Content/fontawesome.css" rel="stylesheet" />
+    <link href="~/Content/brands.css" rel="stylesheet" />
+    <link href="~/Content/solid.css" rel="stylesheet" />
+    <%-- Sweet Alert --%>
+    <script type="text/javascript" src='<%= ResolveClientUrl("~/Scripts/sweetalert2.js") %>'></script>
+    <%-- Alert Custom --%>
+    <script type="text/javascript" src='<%= ResolveClientUrl("~/Scripts/alert.js") %>'></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <style>
+        @font-face {
+            font-family: 'Sarabun';
+            src: url('<%= ResolveClientUrl("~/Fonts/Sarabun-Regular.ttf") %>') format('truetype');
+        }
+
+        * {
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        .navbar {
+            padding-top: 0;
+            padding-bottom: 0;
+            height: 40px;
+        }
+
+        .shadow-hover:hover {
+            transform: scale(1.05);
+            transition: 0.3s;
+        }
+
+        /* Custom Scrollbar */
+        .scroll-custom::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+            background-color: transparent;
+        }
+
+        .scroll-custom::-webkit-scrollbar-track {
+            background: #ddd;
+            border-radius: 5px;
+        }
+
+        .scroll-custom::-webkit-scrollbar-thumb {
+            background: #e11c1c;
+            border-radius: 5px;
+        }
+
+       /* เปลี่ยนสี nav-pills */
+       .nav-pills-danger a:hover {
+           color: white;
+           background-color: #903f3f;
+       }
+
+       .nav-pills-danger a.active,
+       .nav-pills-danger .nav-item.show > a {
+           background-color: #e11c1c !important;
+       }
+    </style>
+</head>
+<body class="bg-dark text-white">
+    <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
+        <div class="container-fluid position-relative d-flex p-0">
+
+            <!-- Spinner Start -->
+            <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <!-- Spinner End -->
+
+
+            <!-- Sidebar Start -->
+            <div class="sidebar bg-dark pb-3 border-end border-danger scroll-custom">
+                <nav class="navbar px-1">
+                    <!-- Brand Logo -->
+                    <a class="navbar-brand mx-auto mb-2 border-bottom link-light" href="~/Admin/Default.aspx" runat="server">
+                        <img src="~/Image/docs.png" runat="server" height="25" class="align-top" />
+                        <span>Document Control</span>
+                    </a>
+
+                    <div class="nav-sidebar navbar-nav nav-pills nav-pills-danger w-100">
+                        <div class="nav-item text-center">
+                            <h5><span class="badge rounded-pill" style="background-color: #e11c1c;">ตั้งค่าระบบ</span></h5>
+                        </div>
+                        <a href="~/Admin/Default.aspx" runat="server" class="nav-item nav-link mb-1 px-2 link-danger">หน้าแรก</a>
+                        <a href="~/Admin/UserApprove.aspx" runat="server" class="nav-item nav-link mb-1 px-2 link-danger">สิทธิ์การอนุมัติ</a>
+                        <a href="~/Admin/Permission.aspx" runat="server" class="nav-item nav-link mb-1 px-2 link-danger">สิทธิ์การใช้งาน</a>
+                        <div class="nav-item mb-1">
+                            <a href="#" class="nav-link dropdown-toggle mb-1 px-2 link-danger" data-bs-toggle="collapse" data-bs-target="#MenuRequesrDAR">Document Action Request</a>
+                            <div id="MenuRequesrDAR" class="collapse nav-treeview border-0 py-0 ps-3">
+                                <a href="~/Admin/RequestDAR.aspx" runat="server" class="dropdown-item px-1 rounded link-danger">คำร้องขอ</a>
+                                <a href="~/Admin/RequestDARDocType.aspx" runat="server" class="dropdown-item px-1 rounded link-danger">ชนิดของเอกสาร</a>
+                                <a href="~/Admin/RequestDAROperation.aspx" runat="server" class="dropdown-item px-1 rounded link-danger">การดำเนินการ</a>
+                            </div>
+                        </div>
+                        <div class="nav-item mb-1">
+                            <a href="#" class="nav-link dropdown-toggle mb-1 px-2 link-danger" data-bs-toggle="collapse" data-bs-target="#MenuRequesrSpec">Specification & Drawing</a>
+                            <div id="MenuRequesrSpec" class="collapse nav-treeview border-0 py-0 ps-3">
+                                <a href="~/Admin/RequestSpec.aspx" runat="server" class="dropdown-item px-1 rounded link-danger">คำร้องขอ</a>
+                                <a href="~/Admin/RequestSpecDocType.aspx" runat="server" class="dropdown-item px-1 rounded link-danger">ชนิดของเอกสาร</a>
+                                <a href="~/Admin/RequestSpecOperation.aspx" runat="server" class="dropdown-item px-1 rounded link-danger">การดำเนินการ</a>
+                            </div>
+                        </div>
+                        <div class="nav-item mb-1">
+                            <a href="#" class="nav-link dropdown-toggle mb-1 px-2 link-danger" data-bs-toggle="collapse" data-bs-target="#MenuKaizen">Kaizen</a>
+                            <div id="MenuKaizen" class="collapse nav-treeview border-0 py-0 ps-3">
+                                <a href="~/Admin/Kaizen.aspx" runat="server" class="dropdown-item px-1 rounded link-danger">คำร้องขอ</a>
+                                <a href="~/Admin/KaizenTopic.aspx" runat="server" class="dropdown-item px-1 rounded link-danger text-decoration-line-through disabled">หัวข้อ</a>
+                                <a href="~/Admin/KaizenVote.aspx" runat="server" class="dropdown-item px-1 rounded link-danger text-decoration-line-through disabled">คะแนน</a>
+                                <a href="~/Admin/KaizenTeam.aspx" runat="server" class="dropdown-item px-1 rounded link-danger text-decoration-line-through disabled">ทีม</a>
+                            </div>
+                        </div>
+                        <div class="nav-item mb-1">
+                            <a href="#" class="nav-link dropdown-toggle mb-1 px-2 link-danger" data-bs-toggle="collapse" data-bs-target="#MenuPublish">เอกสารแจกจ่าย</a>
+                            <div id="MenuPublish" class="collapse nav-treeview border-0 py-0 ps-3">
+                                <a href="~/Admin/Publish.aspx" runat="server" class="dropdown-item px-1 rounded link-danger">หัวข้อ</a>
+                                <a href="~/Admin/PublishDoc.aspx" runat="server" class="dropdown-item px-1 rounded link-danger">ไฟล์ทั้งหมด</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!-- Sidebar End -->
+
+            <!-- Content Start -->
+            <div class="content">
+                <!-- Navbar Start -->
+                <nav class="navbar navbar-expand bg-dark navbar-light sticky-top px-3 py-0 border-bottom border-danger">
+                    <a href="#" class="sidebar-toggler flex-shrink-0">
+                        <i class="fa fa-bars text-danger"></i>
+                    </a>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item ps-2">
+                            <a class="nav-link" href="~/Default.aspx" runat="server">
+                                <img src="~/Image/home.png" width="20" runat="server" />
+                                <span class="align-middle text-white">เมนูหลัก</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="navbar-nav align-items-center ms-auto">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown">
+                                <asp:Label ID="LbName" runat="server" Text="ชื่อ-สกุล" CssClass="mx-2" Style="font-size: 1.1rem;"></asp:Label>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-dark border-top-0 rounded-0 rounded-bottom m-0">
+                                <asp:LinkButton ID="LinkBtnLogout" runat="server" CssClass="dropdown-item" OnClick="LinkBtnLogout_Click" Text="ออกจากระบบ"></asp:LinkButton>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Navbar End -->
+
+                <%-- Content --%>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var url = window.location
+                // for single sidebar menu
+                $('div.nav-sidebar a').filter(function () {
+                    return this.href == url
+                }).addClass('active')
+
+                // for sidebar menu and treeview
+                $('div.nav-treeview a').filter(function () {
+                    return this.href == url
+                }).parent().addClass('show').parent().addClass('show')
+
+                // Spinner
+                var spinner = function () {
+                    setTimeout(function () {
+                        if ($('#spinner').length > 0) {
+                            $('#spinner').removeClass('show');
+                        }
+                    }, 1);
+                };
+                spinner();
+
+                // Sidebar Toggler
+                $('.sidebar-toggler').click(function () {
+                    $('.sidebar, .content').toggleClass("open");
+                    return false;
+                });
+            })
+        </script>
+    </form>
+</body>
+</html>
